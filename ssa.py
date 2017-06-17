@@ -1,3 +1,4 @@
+import readline
 import secrets
 
 def inverse(a, p):
@@ -15,8 +16,7 @@ def inverse(a, p):
     return t
 
 def gen_entries(n, prime):
-    entries = list(range(1, n + 1))
-    return entries
+    return list(range(1, n + 1))
 
 def gen_coefs(constant, n, prime):
     coefs = [constant]
@@ -70,10 +70,10 @@ class Shamir:
         return result
 
 if __name__ == "__main__":
-    secret = 996
-    threshold = 500
-    prime = 997
-    participants = 800
+    secret = int(input("Secret to share: "))
+    threshold = int(input("Threshold: "))
+    prime = int(input("Prime number: "))
+    participants = int(input("Number of participants: "))
     print("original secret = %d" % secret)
     print("threshold = %d" % threshold)
     print("prime = %d" % prime)
@@ -81,5 +81,5 @@ if __name__ == "__main__":
     shamir = Shamir(threshold, prime)
     shares = shamir.shares(secret, participants)
     # print("shares = %s" % shares)
-    secret = shamir.reconstruct(shares[:500])
+    secret = shamir.reconstruct(shares[:threshold])
     print("recovered secret = %d" % secret)
