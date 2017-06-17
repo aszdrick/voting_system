@@ -28,8 +28,7 @@ def lagrange_betas(entries):
     betas = []
     for xj in entries:
         product = 1;
-        for xm in shares:
-            if xj == x: continue
+        for xm in [xm for xm in entries if xm != xj]:
             d = (xm - xj) % self.prime
             product = (product * xm * inverse(d, self.prime)) % self.prime
         betas.append(product)
@@ -56,14 +55,13 @@ class Shamir:
         for entry in entries:
             shares.append((entry, self.polinomial(entry)))
         return shares
-    
+
     def reconstruct(self, shares):
         assert (len(shares) >= self.t), "Insufficient number of shares"
         result = 0
         for (x, y) in shares:
             product = 1;
-            for (xm, __) in shares:
-                if xm == x: continue
+            for xm in [xm for (xm, __) in shares if xm != x]:
                 d = (xm - x) % self.prime
                 product = (product * xm * inverse(d, self.prime)) % self.prime
             result = (result + y * product) % self.prime
