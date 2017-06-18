@@ -86,39 +86,16 @@ def lagrange_betas(entries, prime):
     return betas
 
 if __name__ == "__main__":
-    # secret = int(input("Secret to share: "))
-    # threshold = int(input("Threshold: "))
-    # prime = int(input("Prime number: "))
-    # participants = int(input("Number of participants: "))
-    # print("original secret = %d" % secret)
-    # print("threshold = %d" % threshold)
-    # print("prime = %d" % prime)
-    # print("participants = %d" % participants)
-    # shamir = Shamir(threshold, prime)
-    # shares = shamir.shares(secret, participants)
-    # # print("shares = %s" % shares)
-    # secret = shamir.reconstruct(shares[:threshold])
-    # print("recovered secret = %d" % secret)
-
-    shamir = Shamir(5, 2 ** 2203 - 1)
-    entries = gen_entries(100, 2 ** 2203 - 1)
-    betas = lagrange_betas(entries, 2 ** 2203 - 1)
-    v1 = shamir.shares_for(5, entries)
-    v2 = shamir.shares_for(5, entries)
-
-    mult = []
-    zs = {}
-
-    for i in entries:
-        z = v1[i] * v2[i] * betas[i - 1]
-        zshares = shamir.shares_for(z, entries)
-        zs[i] = zshares
-
-    for i in entries:
-        accum = 0
-        for j in entries:
-            accum += zs[j][i]
-        v1[i] = accum
-
-    secret = shamir.reconstruct(v1)
-    print(secret)
+    secret = int(input("Secret to share: "))
+    threshold = int(input("Threshold: "))
+    prime = int(input("Prime number: "))
+    participants = int(input("Number of participants: "))
+    print("original secret = %d" % secret)
+    print("threshold = %d" % threshold)
+    print("prime = %d" % prime)
+    print("participants = %d" % participants)
+    shamir = Shamir(threshold, prime)
+    shares = shamir.shares(secret, participants)
+    # print("shares = %s" % shares)
+    secret = shamir.reconstruct(shares[:threshold])
+    print("recovered secret = %d" % secret)

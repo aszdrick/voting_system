@@ -77,7 +77,7 @@ class ShamirPoll:
                 a.consolidate_vote(shares)
 
     def results(self):
-        print("Number of voters:", self.votes)
+        print("\nNumber of voters:", self.votes)
         print("\nResults:\n")
         shares = {a.key : a.votes for a in self.authorities}
         product = self.shamir.reconstruct(shares)
@@ -116,9 +116,12 @@ def factorize(number, primes):
 
 if __name__ == "__main__":
     poll = ShamirPoll(
-        30, ["Sure!", "Yes", "No.", "Maybe?"],
-        "Does ShamirPoll work?"
+        nauth = 30,
+        options = ["Sure!", "Yes", "No.", "Maybe?"],
+        question = "Does ShamirPoll work?"
     )
+
+    print("\nVoting...")
 
     poll.vote("Yes")
     poll.vote("No.")
